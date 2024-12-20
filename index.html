@@ -3,17 +3,222 @@
 
 <head>
   <meta charset="UTF-8">
+  <link rel="icon" type="image/png" sizes="32x32" href="./favicon-32x32.png">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>January 2025 Frontend Mentor Challenge</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;700&display=swap');
+
+    :root {
+      /*
+        CSS Custom Properties
+        https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
+      */
+      --mobile-width: 375px;
+      --tablet-width: 950px;
+      --desktop-width: 1440px;
+      --white: hsl(0, 0%, 100%);
+      --light: hsl(212, 45%, 89%);
+      --medium: hsl(220, 15%, 55%);
+      --dark: hsl(218, 44%, 22%);
+      font-size: 15px;
+    }
+
+    html {
+      height: 100%;
+    }
+
+    body {
+      height: 100%;
+      font-family: 'Outfit', sans-serif;
+      background: var(--medium);
+      margin: 0;
+      padding: 0;
+    }
+
+    header,
+    footer {
+      /*
+        Flexbox
+        https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox
+      */
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      margin: 0;
+      padding: 0 50px;
+
+      background: var(--dark);
+      color: var(--white);
+    }
+
+    footer {
+      justify-content: center;
+      padding: 20px;
+    }
+
+    footer a {
+      margin: 0 0 0 5px;
+    }
+
+    .nav {
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+    }
+
+    .nav li {
+      list-style-type: none;
+      margin: auto 20px;
+    }
+
+    .nav li a,
+    .nav li a:visited {
+      /*
+        Font variant (for setting small caps in the header buttons)
+        https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant
+      */
+      font-variant: small-caps;
+      font-weight: 600;
+      padding: 5px;
+      border-radius: 5px;
+      border: 1px solid var(--dark);
+      background: var(--white);
+      color: var(--dark);
+      text-decoration: none;
+    }
+
+    .nav li a:hover {
+      background: var(--medium);
+      color: var(--white);
+
+    }
+
+    .card {
+      max-width: 600px;
+      /*
+        Auto margin to center an element
+        https://developer.mozilla.org/en-US/docs/Web/CSS/margin
+      */
+      margin: 70px auto;
+      background: var(--white);
+      padding: 20px;
+      /*
+        Box Shadow
+        https://developer.mozilla.org/en-US/docs/Web/CSS/box-shadow
+      */
+      box-shadow: 2px 2px 2px 1px var(--dark);
+    }
+
+    .card-heading {
+      line-height: 1.2rem;
+    }
+
+    .card-subheading {
+      line-height: 1rem;
+      font-weight: 400;
+      color: var(--dark);
+    }
+
+    /*
+      Wrapper is the magic grid that lets me
+      stick the footer to the bottom of the page.
+      Note that html and body height both had to be
+      set to 100% as well for this.
+      https://developer.mozilla.org/en-US/docs/Web/CSS/Layout_cookbook/Sticky_footers
+    */
+    .wrapper {
+      min-height: 100%;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .attribution a {
+      color: var(--light);
+    }
+
+    /* 
+      Media Queries
+        https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_media_queries/Using_media_queries 
+    */
+    @media (max-width: 950px) {
+      .header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .nav {
+        justify-content: space-around;
+      }
+
+      .card {
+        max-width: 80vw;
+      }
+    }
+  </style>
 </head>
 
 <body>
-  <h1>January 2025 Frontend Mentor Challenge</h1>
-  <ul>
-    <li><a href="https://p1xt.github.io/January2025-FrontendMentorChallenge/">Live Site</a></li>
-    <li><a href="https://github.com/P1xt/January2025-FrontendMentorChallenge">Repository</a></li>
-  </ul>
-  <h2>Completed Projects</h2>
+  <div class="wrapper">
+    <header class="header">
+      <h1>January 2025 Frontend Mentor Challenge</h1>
+      <ul class="nav">
+        <li><a href="https://github.com/P1xt/January2025-FrontendMentorChallenge">Repository</a></li>
+      </ul>
+    </header>
+    <main id="vanilla">
+      <div class="card">
+        <h2 class="card-heading">Completed Projects</h2>
+        <h3 id="tally" class="card-subheading"></h3>
+        <div class="card-body">
+          <p>The projects linked below use only vanilla HTML, CSS, and JavaScript.</p>
+          <h3>Newbie</h3>
+          <ul class="completed">
+            <li><a href="./projects/newbie/qr-code-component-main/index.html">QR Code Component</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+    </main>
+    <footer class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/P1xt">P1xt</a>.
+    </footer>
+  </div>
+
+  <script>
+    /*
+      Wait until the page has loaded
+      then query the dom for how many projects
+      are in the "completed" unordered lists
+      and update the tally.
+      See here for using JavaScript to manipulate
+      the DOM: 
+      https://developer.mozilla.org/en-US/docs/Web/API/Document
+    */
+    document.addEventListener("DOMContentLoaded", (event) => {
+      let completed = 0;
+
+      // get all the unordered lists
+      // with class "completed"
+      const completedLists = document.getElementsByClassName("completed");
+
+      // loop through them
+      for (let i = 0; i < completedLists.length; i++) {
+        // increment the completed count
+        // for every li found in the list
+        completed += completedLists[i].querySelectorAll('li').length;
+      }
+
+      // find the tally on the page
+      const tally = document.getElementById("tally");
+
+      // update the tally element with the number
+      // of projects that have been completed
+      tally.textContent = `Total Completed:  ${completed}`;
+    });
+  </script>
 </body>
 
 </html>

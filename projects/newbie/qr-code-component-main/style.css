@@ -41,7 +41,7 @@ body {
   */
   width: calc(var(--mobile-width) - 80px);
   border: 1px solid var(--light);
-  margin: 140px auto;
+  margin: 200px auto;
   background: var(--white);
   border-radius: 5%;
   padding: 20px;
